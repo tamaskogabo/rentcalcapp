@@ -22,11 +22,12 @@ public class ClockStandsService {
         List<ClockStands> result = new ArrayList<>();
         for (ClockStandsDto dto : DTOs) {
             result.add(new ClockStands(
-                            dto.warmWaterStand(),
-                            dto.coldWaterStand(),
-                            dto.electricityStand(),
-                            dto.warmingBill(),
-                            dto.gasBill()
+                    dto.date(),
+                    dto.warmWaterStand(),
+                    dto.coldWaterStand(),
+                    dto.electricityStand(),
+                    dto.warmingBill(),
+                    dto.gasBill()
                     )
             );
         }
