@@ -17,4 +17,36 @@ public class ClockStands {
         this.warmingBill = warmingBill;
         this.gasBill = gasBill;
     }
+
+    public double getWarmWaterStand() {
+        return warmWaterStand;
+    }
+
+    public double getColdWaterStand() {
+        return coldWaterStand;
+    }
+
+    public int getElectricityStand() {
+        return electricityStand;
+    }
+
+    public int getWarmingBill() {
+        return warmingBill;
+    }
+
+    public int getGasBill() {
+        return gasBill;
+    }
+
+    public int getBaseRent() {
+        return baseRent;
+    }
+
+    public int getKkt() {
+        return kkt;
+    }
+
+    public int getInternetCost() {
+        return internetCost;
+    }
 }

@@ -2,6 +2,7 @@ package com.codecool.backend;
 
 import com.codecool.backend.dao.ClockStandsDao;
 import com.codecool.backend.dao.ClockStandsDaoJDBC;
+import com.codecool.backend.database.Database;
 import com.codecool.backend.service.ClockStandsService;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -15,8 +16,12 @@ public class BackendApplication {
     }
 
     @Bean
+    public Database database() {
+        return new Database("jdbc:postgresql://localhost:5432/postgres", "postgres", System.getenv("databasePassword"));
+    }
+    @Bean
     public ClockStandsDao clockStandsDao() {
-        return new ClockStandsDaoJDBC();
+        return new ClockStandsDaoJDBC(database());
     }
     @Bean
     public ClockStandsService clockStandsService() {
