@@ -1,25 +1,26 @@
 package com.codecool.backend.dao;
 
+import com.codecool.backend.controller.dto.ClockStandsDto;
 import com.codecool.backend.dao.model.ClockStands;
 
 import java.time.Month;
 import java.util.List;
 
-public class MonthlyClockStandsDaoJDBC implements MonthlyClockStandsDao {
+public class ClockStandsDaoJDBC implements ClockStandsDao {
     @Override
-    public List<ClockStands> getAllClockStands() {
+    public List<ClockStandsDto> getAllClockStands() {
         //TODO
         return null;
     }
 
     @Override
-    public ClockStands getClockStandByDate(int year, Month month) {
+    public ClockStandsDto getClockStandByDate(int year, Month month) {
         //TODO
         return null;
     }
 
     @Override
-    public ClockStands getClockStandsById(int id) {
+    public ClockStandsDto getClockStandById(int id) {
         //TODO
         return null;
     }
