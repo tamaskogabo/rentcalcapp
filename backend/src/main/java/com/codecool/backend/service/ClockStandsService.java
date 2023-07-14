@@ -23,24 +23,25 @@ public class ClockStandsService {
         return prepareClockStands(DTOs);
     }
 
+    public List<ClockStands> getClockStandsByMonthAndYear(int year, Month month) throws SQLException {
+        List<ClockStandsDto> DTOs = clockStandsDao.getClockStandByMonthAndYear(year, month);
+        return prepareClockStands(DTOs);
+    }
+
     private static List<ClockStands> prepareClockStands(List<ClockStandsDto> DTOs) {
         List<ClockStands> result = new ArrayList<>();
         for (ClockStandsDto dto : DTOs) {
             result.add(new ClockStands(
-                    dto.date(),
-                    dto.warmWaterStand(),
-                    dto.coldWaterStand(),
-                    dto.electricityStand(),
-                    dto.warmingBill(),
-                    dto.gasBill()
+                            dto.date(),
+                            dto.warmWaterStand(),
+                            dto.coldWaterStand(),
+                            dto.electricityStand(),
+                            dto.warmingBill(),
+                            dto.gasBill()
                     )
             );
         }
         return result;
     }
 
-    public List<ClockStands> getClockStandsByMonthAndYear(int year, Month month) throws SQLException {
-        List<ClockStandsDto> DTOs = clockStandsDao.getClockStandByMonthAndYear(year, month);
-        return prepareClockStands(DTOs);
-    }
 }

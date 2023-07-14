@@ -38,11 +38,14 @@ public class ClockStandsDaoJDBC implements ClockStandsDao {
                 WHERE extract(MONTH FROM date) = ?
                   AND extract(YEAR FROM date) = ?;""";
         Connection connection = database.getConnection();
-        PreparedStatement preparedStatement = connection.prepareStatement(query);
-        preparedStatement.setInt(1, month.getValue());
-        preparedStatement.setInt(2, year);
-        ResultSet rs = preparedStatement.executeQuery();
-        return prepareClockStandDtos(rs);
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, month.getValue());
+            preparedStatement.setInt(2, year);
+            ResultSet rs = preparedStatement.executeQuery();
+            return prepareClockStandDtos(rs);
+        } catch (SQLException e) {
+            throw new SQLException(e);
+        }
     }
 
     private static List<ClockStandsDto> prepareClockStandDtos(ResultSet rs) throws SQLException {
@@ -63,8 +66,8 @@ public class ClockStandsDaoJDBC implements ClockStandsDao {
     }
 
     @Override
-    public ClockStandsDto getClockStandById(int id) {
+    public boolean postClockStand(ClockStands clockStands) {
         //TODO
-        return null;
+        return false;
     }
 }
