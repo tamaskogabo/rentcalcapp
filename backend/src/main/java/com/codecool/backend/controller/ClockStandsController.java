@@ -3,12 +3,10 @@ package com.codecool.backend.controller;
 import com.codecool.backend.dao.model.ClockStands;
 import com.codecool.backend.service.ClockStandsService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
+import java.time.Month;
 import java.util.List;
 
 @RestController
@@ -26,5 +24,11 @@ public class ClockStandsController {
     @GetMapping("/all")
     public List<ClockStands> getAllClockStandsObjects() throws SQLException {
         return clockStandsService.getAllClockStands();
+    }
+
+    @CrossOrigin(origins = "http://localhost:3000")
+    @GetMapping("/date")
+    public List<ClockStands> getClockStandsByYearAndMonth(@RequestParam int year, Month month) throws SQLException {
+        return clockStandsService.getClockStandsByMonthAndYear(year, month);
     }
 }

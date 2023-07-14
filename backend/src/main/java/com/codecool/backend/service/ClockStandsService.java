@@ -6,6 +6,7 @@ import com.codecool.backend.dao.model.ClockStands;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.sql.SQLException;
+import java.time.Month;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,6 +20,10 @@ public class ClockStandsService {
 
     public List<ClockStands> getAllClockStands() throws SQLException {
         List<ClockStandsDto> DTOs = clockStandsDao.getAllClockStands();
+        return prepareClockStands(DTOs);
+    }
+
+    private static List<ClockStands> prepareClockStands(List<ClockStandsDto> DTOs) {
         List<ClockStands> result = new ArrayList<>();
         for (ClockStandsDto dto : DTOs) {
             result.add(new ClockStands(
@@ -32,5 +37,10 @@ public class ClockStandsService {
             );
         }
         return result;
+    }
+
+    public List<ClockStands> getClockStandsByMonthAndYear(int year, Month month) throws SQLException {
+        List<ClockStandsDto> DTOs = clockStandsDao.getClockStandByMonthAndYear(year, month);
+        return prepareClockStands(DTOs);
     }
 }
