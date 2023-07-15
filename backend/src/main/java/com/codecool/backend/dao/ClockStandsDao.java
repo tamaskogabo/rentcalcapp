@@ -10,5 +10,5 @@ import java.util.List;
 public interface ClockStandsDao {
     public List<ClockStandsDto> getAllClockStands() throws SQLException;
     public List<ClockStandsDto> getClockStandByMonthAndYear(int year, Month month) throws SQLException;
-    public boolean postClockStand(ClockStands clockStands);
+    public boolean postClockStand(ClockStands clockStands) throws SQLException;
 }

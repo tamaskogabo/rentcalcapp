@@ -1,5 +1,6 @@
 package com.codecool.backend.controller;
 
+import com.codecool.backend.controller.dto.ClockStandsDto;
 import com.codecool.backend.dao.model.ClockStands;
 import com.codecool.backend.service.ClockStandsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,5 +31,11 @@ public class ClockStandsController {
     @GetMapping("/date")
     public List<ClockStands> getClockStandsByYearAndMonth(@RequestParam int year, Month month) throws SQLException {
         return clockStandsService.getClockStandsByMonthAndYear(year, month);
+    }
+
+    @CrossOrigin(origins = "http://localhost:3000")
+    @PostMapping("/")
+    public boolean postClockStand(@RequestBody ClockStands clockStands) throws  SQLException {
+        return clockStandsService.postClockStands(clockStands);
     }
 }

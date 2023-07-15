@@ -28,7 +28,7 @@ public class ClockStandsService {
         return prepareClockStands(DTOs);
     }
 
-    private static List<ClockStands> prepareClockStands(List<ClockStandsDto> DTOs) {
+    private List<ClockStands> prepareClockStands(List<ClockStandsDto> DTOs) {
         List<ClockStands> result = new ArrayList<>();
         for (ClockStandsDto dto : DTOs) {
             result.add(new ClockStands(
@@ -42,6 +42,11 @@ public class ClockStandsService {
             );
         }
         return result;
+    }
+
+    public boolean postClockStands(ClockStands clockStands) throws SQLException {
+        clockStandsDao.postClockStand(clockStands);
+        return true;
     }
 
 }
