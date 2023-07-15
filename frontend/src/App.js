@@ -19,23 +19,27 @@ const MONTHS = [
 ];
 
 function App() {
-    const [lastMonthData, setlastMonthData] = useState(null);
+    const [lastMonthData, setLastMonthData] = useState(null);
+    const [thisMonthData, setThisMonthData] = useState(null);
 
     useEffect(() => {
         async function fetchLastMonth() {
-            setlastMonthData(null);
+            setLastMonthData(null);
+            setThisMonthData(null);
             const currentYear = new Date().getFullYear();
-            
-            //Has to be set one month earlier after everything is done!
-            const currentMonth = MONTHS[new Date().getMonth()];
-            console.log(currentYear);
-            console.log(currentMonth);
-            const response = await fetch(
-                `http://localhost:8080/clockstands/date?year=${currentYear}&month=${currentMonth}`,
+            const lastMonth = MONTHS[new Date().getMonth() - 1];
+            const thisMonth = MONTHS[new Date().getMonth()];
+            const responseLastMonth = await fetch(
+                `http://localhost:8080/clockstands/date?year=${currentYear}&month=${lastMonth}`,
             );
-            const result = await response.json();
+            const resultLastMonth = await responseLastMonth.json();
+            const responseThisMonth = await fetch(
+                `http://localhost:8080/clockstands/date?year=${currentYear}&month=${thisMonth}`,
+            );
+            const resultThisMonth = await responseThisMonth.json();
             if (!ignore) {
-                setlastMonthData(result);
+                setLastMonthData(resultLastMonth);
+                setThisMonthData(resultThisMonth);
             }
         }
         let ignore = false;
@@ -48,7 +52,7 @@ function App() {
     return (
         <>
             <TopMenu />
-            <CalculatePage lastMonthData={lastMonthData} />
+            <CalculatePage lastMonthData={lastMonthData} thisMonthData={thisMonthData} />
         </>
     );
 }
