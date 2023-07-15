@@ -1,16 +1,17 @@
 import React from 'react';
-import { Box, Divider, Paper, Stack, Typography } from '@mui/material';
+import { Box, Paper, Stack, Typography } from '@mui/material';
 import WaterDropIcon from '@mui/icons-material/WaterDrop';
 import ElectricBoltIcon from '@mui/icons-material/ElectricBolt';
 import WbSunnyIcon from '@mui/icons-material/WbSunny';
+import CostsBox from './CostsBox';
 
 export default function CalculatePage({ lastMonthData, thisMonthData }) {
     //TODO loading state for the fetch of data
 
     return (
         <>
-            <Stack direction='column' alignItems='center'>
-                <Box maxWidth={0.9} mt='20px'>
+            <Stack direction='row' justifyContent='center' gap={10}>
+                <Box maxWidth={0.4} mt='20px'>
                     <Paper elevation={3}>
                         <Typography variant='h4' p={2} mt='20px'>
                             Last month's standings
@@ -78,11 +79,20 @@ export default function CalculatePage({ lastMonthData, thisMonthData }) {
                                         thisMonthData[0].warmingBill}{' '}
                                     Ft
                                 </Typography>
-                                <Divider>COSTS</Divider>
                             </>
                         )}
                     </Paper>
                 </Box>
+                {thisMonthData && lastMonthData && (
+                    <Box maxWidth={0.4} mt='20px'>
+                        <Paper elevation={3}>
+                            <Typography variant='h4' mt='20px' p={2}>
+                                Costs
+                            </Typography>
+                            <CostsBox thisMonthData={thisMonthData} lastMonthData={lastMonthData}/>
+                        </Paper>
+                    </Box>
+                )}
             </Stack>
         </>
     );
