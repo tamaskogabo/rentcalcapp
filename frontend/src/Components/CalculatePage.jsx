@@ -6,7 +6,6 @@ import WbSunnyIcon from '@mui/icons-material/WbSunny';
 import CostsBox from './CostsBox';
 
 export default function CalculatePage({ lastMonthData, thisMonthData }) {
-    //TODO loading state for the fetch of data
 
     return (
         <>
@@ -89,7 +88,10 @@ export default function CalculatePage({ lastMonthData, thisMonthData }) {
                             <Typography variant='h4' mt='20px' p={2}>
                                 Costs
                             </Typography>
-                            <CostsBox thisMonthData={thisMonthData} lastMonthData={lastMonthData}/>
+                            <CostsBox
+                                thisMonthData={thisMonthData}
+                                lastMonthData={lastMonthData}
+                            />
                         </Paper>
                     </Box>
                 )}
