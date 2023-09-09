@@ -1,6 +1,5 @@
 package com.codecool.backend.controller;
 
-import com.codecool.backend.controller.dto.ClockStandsDto;
 import com.codecool.backend.dao.model.ClockStands;
 import com.codecool.backend.service.ClockStandsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,9 +13,9 @@ import java.util.List;
 @RequestMapping("clockstands")
 public class ClockStandsController {
 
-    @Autowired
     private final ClockStandsService clockStandsService;
 
+    @Autowired
     public ClockStandsController(ClockStandsService clockStandsService) {
         this.clockStandsService = clockStandsService;
     }
