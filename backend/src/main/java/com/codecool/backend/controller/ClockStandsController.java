@@ -19,7 +19,7 @@ public class ClockStandsController {
     public ClockStandsController(ClockStandsService clockStandsService) {
         this.clockStandsService = clockStandsService;
     }
-    
+
     @GetMapping("/all")
     public List<ClockStands> getAllClockStandsObjects() throws SQLException {
         return clockStandsService.getAllClockStands();

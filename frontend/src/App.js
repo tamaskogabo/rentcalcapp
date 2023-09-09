@@ -1,8 +1,10 @@
-import { Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import './App.css';
 import CalculatePage from './Components/CalculatePage';
 import TopMenu from './Components/TopMenu';
 import { useState, useEffect } from 'react';
+import ClockStandsHistoryPage from './Components/ClockStandsHistoryPage';
+import Loading from './Components/Loading';
 
 const MONTHS = [
     'JANUARY',
@@ -22,10 +24,11 @@ const MONTHS = [
 function App() {
     const [lastMonthData, setLastMonthData] = useState(null);
     const [thisMonthData, setThisMonthData] = useState(null);
+    const [loading, setLoading] = useState(true);
     const [page, setPage] = useState('CALC');
 
     useEffect(() => {
-        async function fetchLastMonth() {
+        async function fetchClockStands() {
             setLastMonthData(null);
             setThisMonthData(null);
             const currentYear = new Date().getFullYear();
@@ -42,14 +45,31 @@ function App() {
             if (!ignore) {
                 setLastMonthData(resultLastMonth);
                 setThisMonthData(resultThisMonth);
+                setLoading(false);
             }
         }
         let ignore = false;
-        fetchLastMonth();
+        fetchClockStands();
         return () => {
             ignore = true;
         };
     }, []);
+
+    
+
+
+    if (loading) {
+        return (
+            <Box
+                width={'100vw'}
+                mt={'50px'}
+                display={'flex'}
+                justifyContent={'center'}
+            >
+                <Loading />
+            </Box>
+        );
+    }
 
     if (page === 'CALC') {
         return (
@@ -72,7 +92,7 @@ function App() {
         return (
             <>
                 <TopMenu setPage={setPage}/>
-                <Typography>Previous Data</Typography>
+                <ClockStandsHistoryPage />
             </>
         );
     }
