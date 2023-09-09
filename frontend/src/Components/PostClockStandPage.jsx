@@ -7,17 +7,18 @@ import {
     TextField,
     Typography,
 } from '@mui/material';
-import React from 'react';
+import React, { useState } from 'react';
 
 export default function PostClockStandPage() {
-    const [open, setOpen] = React.useState(false);
+    const [openAlert, setOpenAlert] = useState(false);
+    const [openSuccess, setOpenSuccess] = useState(false);
 
     const handleClose = (event, reason) => {
         if (reason === 'clickaway') {
             return;
         }
 
-        setOpen(false);
+        setOpenAlert(false);
     };
 
     async function handlePostClockStands(e) {
@@ -33,10 +34,11 @@ export default function PostClockStandPage() {
             body: JSON.stringify(formJson),
         });
         const response = await request.json();
-        console.log(response);
         if (response == false) {
             console.error('Already found an entry for this month on server!');
-            setOpen(true);
+            setOpenAlert(true);
+        } else {
+            setOpenSuccess(true);
         }
     }
 
@@ -94,8 +96,21 @@ export default function PostClockStandPage() {
                     </Box>
                 </Paper>
             </Box>
-            <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
-                <Alert severity='error'>Already found an entry for this month!</Alert>
+            <Snackbar
+                open={openAlert}
+                autoHideDuration={6000}
+                onClose={handleClose}
+            >
+                <Alert severity='error'>
+                    Already found an entry for this month!
+                </Alert>
+            </Snackbar>
+            <Snackbar
+                open={openSuccess}
+                autoHideDuration={6000}
+                onClose={handleClose}
+            >
+                <Alert severity='success'>Save successful!</Alert>
             </Snackbar>
         </>
     );
