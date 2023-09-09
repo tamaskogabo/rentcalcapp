@@ -9,7 +9,7 @@ import {
 } from '@mui/material';
 import CalculateIcon from '@mui/icons-material/Calculate';
 
-export default function TopMenu() {
+export default function TopMenu({setPage}) {
     return (
         <AppBar position='sticky'>
             <Container maxWidth='xl'>
@@ -42,9 +42,9 @@ export default function TopMenu() {
                             width: { xs: 'auto', sm: '0.7', md: '0.6' },
                         }}
                     >
-                        <Button variant='contained'>Calculate</Button>
-                        <Button variant='contained'>Post</Button>
-                        <Button variant='contained'>See previous data</Button>
+                        <Button variant='contained' onClick={() => setPage('CALC')}>Calculate</Button>
+                        <Button variant='contained' onClick={() => setPage('POST')}>Post</Button>
+                        <Button variant='contained' onClick={() => setPage('PREV')}>See previous data</Button>
                     </Box>
                 </Toolbar>
             </Container>

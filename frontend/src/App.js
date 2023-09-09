@@ -1,3 +1,4 @@
+import { Typography } from '@mui/material';
 import './App.css';
 import CalculatePage from './Components/CalculatePage';
 import TopMenu from './Components/TopMenu';
@@ -21,6 +22,7 @@ const MONTHS = [
 function App() {
     const [lastMonthData, setLastMonthData] = useState(null);
     const [thisMonthData, setThisMonthData] = useState(null);
+    const [page, setPage] = useState('CALC');
 
     useEffect(() => {
         async function fetchLastMonth() {
@@ -30,11 +32,11 @@ function App() {
             const lastMonth = MONTHS[new Date().getMonth() - 1];
             const thisMonth = MONTHS[new Date().getMonth()];
             const responseLastMonth = await fetch(
-                `http://localhost:8080/clockstands/date?year=${currentYear}&month=${lastMonth}`,
+                `/clockstands/date?year=${currentYear}&month=${lastMonth}`,
             );
             const resultLastMonth = await responseLastMonth.json();
             const responseThisMonth = await fetch(
-                `http://localhost:8080/clockstands/date?year=${currentYear}&month=${thisMonth}`,
+                `/clockstands/date?year=${currentYear}&month=${thisMonth}`,
             );
             const resultThisMonth = await responseThisMonth.json();
             if (!ignore) {
@@ -49,12 +51,31 @@ function App() {
         };
     }, []);
 
-    return (
-        <>
-            <TopMenu />
-            <CalculatePage lastMonthData={lastMonthData} thisMonthData={thisMonthData} />
-        </>
-    );
+    if (page === 'CALC') {
+        return (
+            <>
+                <TopMenu setPage={setPage} />
+                <CalculatePage
+                    lastMonthData={lastMonthData}
+                    thisMonthData={thisMonthData}
+                />
+            </>
+        );
+    } else if (page === 'POST') {
+        return (
+            <>
+                <TopMenu setPage={setPage}/>
+                <Typography>Post Data</Typography>
+            </>
+        );
+    } else if (page === 'PREV') {
+        return (
+            <>
+                <TopMenu setPage={setPage}/>
+                <Typography>Previous Data</Typography>
+            </>
+        );
+    }
 }
 
 export default App;
