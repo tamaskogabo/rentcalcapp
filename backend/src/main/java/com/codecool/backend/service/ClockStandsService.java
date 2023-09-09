@@ -45,8 +45,7 @@ public class ClockStandsService {
     }
 
     public boolean postClockStands(ClockStands clockStands) throws SQLException {
-        clockStandsDao.postClockStand(clockStands);
-        return true;
+        return clockStandsDao.postClockStand(clockStands);
     }
 
 }

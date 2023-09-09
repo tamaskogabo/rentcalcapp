@@ -67,21 +67,24 @@ public class ClockStandsDaoJDBC implements ClockStandsDao {
 
     @Override
     public boolean postClockStand(ClockStands clockStands) throws SQLException {
-        String query = """
-                INSERT INTO clockstands VALUES (DEFAULT, DEFAULT, ?, ?, ?, ?, ?);
-                """;
-        Connection connection = database.getConnection();
-        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setDouble(1, clockStands.getWarmWaterStand());
-            preparedStatement.setDouble(2, clockStands.getColdWaterStand());
-            preparedStatement.setInt(3, clockStands.getElectricityStand());
-            preparedStatement.setInt(4, clockStands.getWarmingBill());
-            preparedStatement.setInt(5, clockStands.getGasBill());
-            preparedStatement.addBatch();
-            preparedStatement.executeBatch();
-            return true;
-        } catch (SQLException e) {
-            throw new SQLException(e);
+        if (getClockStandByMonthAndYear(LocalDate.now().getYear(), LocalDate.now().getMonth()).isEmpty()) {
+            String query = """
+                    INSERT INTO clockstands VALUES (DEFAULT, DEFAULT, ?, ?, ?, ?, ?);
+                    """;
+            Connection connection = database.getConnection();
+            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+                preparedStatement.setDouble(1, clockStands.getWarmWaterStand());
+                preparedStatement.setDouble(2, clockStands.getColdWaterStand());
+                preparedStatement.setInt(3, clockStands.getElectricityStand());
+                preparedStatement.setInt(4, clockStands.getWarmingBill());
+                preparedStatement.setInt(5, clockStands.getGasBill());
+                preparedStatement.addBatch();
+                preparedStatement.executeBatch();
+                return true;
+            } catch (SQLException e) {
+                throw new SQLException(e);
+            }
         }
+        return false;
     }
 }

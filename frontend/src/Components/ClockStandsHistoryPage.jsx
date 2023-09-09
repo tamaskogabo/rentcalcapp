@@ -46,61 +46,59 @@ export default function ClockStandsHistoryPage() {
 
     return (
         <>
-            {clockstands && (
-                <TableContainer component={Paper}>
-                    <Table sx={{ minWidth: 650 }} aria-label='simple table'>
-                        <TableHead>
-                            <TableRow>
-                                <TableCell>Date</TableCell>
-                                <TableCell align='right'>Warm water</TableCell>
-                                <TableCell align='right'>Cold water</TableCell>
-                                <TableCell align='right'>Electricity</TableCell>
-                                <TableCell align='right'>Warming</TableCell>
-                                <TableCell align='right'>Gas</TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {clockstands.map((row) => (
-                                <TableRow
-                                    key={
+            <TableContainer component={Paper}>
+                <Table sx={{ minWidth: 650 }} aria-label='simple table'>
+                    <TableHead>
+                        <TableRow>
+                            <TableCell>Date</TableCell>
+                            <TableCell align='right'>Warm water</TableCell>
+                            <TableCell align='right'>Cold water</TableCell>
+                            <TableCell align='right'>Electricity</TableCell>
+                            <TableCell align='right'>Warming</TableCell>
+                            <TableCell align='right'>Gas</TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {clockstands.map((row) => (
+                            <TableRow
+                                key={
+                                    new Date(row.dateTime)
+                                        .toISOString()
+                                        .split('T')[0]
+                                }
+                                sx={{
+                                    '&:last-child td, &:last-child th': {
+                                        border: 0,
+                                    },
+                                }}
+                            >
+                                <TableCell component='th' scope='row'>
+                                    {
                                         new Date(row.dateTime)
                                             .toISOString()
                                             .split('T')[0]
                                     }
-                                    sx={{
-                                        '&:last-child td, &:last-child th': {
-                                            border: 0,
-                                        },
-                                    }}
-                                >
-                                    <TableCell component='th' scope='row'>
-                                        {
-                                            new Date(row.dateTime)
-                                                .toISOString()
-                                                .split('T')[0]
-                                        }
-                                    </TableCell>
-                                    <TableCell align='right'>
-                                        {row.warmWaterStand}
-                                    </TableCell>
-                                    <TableCell align='right'>
-                                        {row.coldWaterStand}
-                                    </TableCell>
-                                    <TableCell align='right'>
-                                        {row.electricityStand}
-                                    </TableCell>
-                                    <TableCell align='right'>
-                                        {row.warmingBill}
-                                    </TableCell>
-                                    <TableCell align='right'>
-                                        {row.gasBill}
-                                    </TableCell>
-                                </TableRow>
-                            ))}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
-            )}
+                                </TableCell>
+                                <TableCell align='right'>
+                                    {row.warmWaterStand}
+                                </TableCell>
+                                <TableCell align='right'>
+                                    {row.coldWaterStand}
+                                </TableCell>
+                                <TableCell align='right'>
+                                    {row.electricityStand}
+                                </TableCell>
+                                <TableCell align='right'>
+                                    {row.warmingBill}
+                                </TableCell>
+                                <TableCell align='right'>
+                                    {row.gasBill}
+                                </TableCell>
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                </Table>
+            </TableContainer>
         </>
     );
 }

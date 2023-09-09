@@ -3,7 +3,8 @@ package com.codecool.backend.dao.model;
 public enum DefaultPrices {
     BASE_RENT(170000),
     KKT(25350),
-    INTERNET(6500);
+    INTERNET(6500),
+    GAS(5635);
 
     final int price;
 

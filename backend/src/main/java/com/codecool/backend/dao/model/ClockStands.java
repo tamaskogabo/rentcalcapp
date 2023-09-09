@@ -10,7 +10,7 @@ public class ClockStands {
     private final double coldWaterStand;
     private final int electricityStand;
     private final int warmingBill;
-    private final int gasBill;
+    private final int gasBill = GAS.price;
     private final int baseRent = BASE_RENT.price;
     private final int kkt = KKT.price;
     private final int internetCost = INTERNET.price;
@@ -21,7 +21,6 @@ public class ClockStands {
         this.coldWaterStand = coldWaterStand;
         this.electricityStand = electricityStand;
         this.warmingBill = warmingBill;
-        this.gasBill = gasBill;
     }
 
     public LocalDateTime getDateTime() {

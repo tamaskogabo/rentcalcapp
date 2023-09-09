@@ -1,10 +1,11 @@
-import { Box, Typography } from '@mui/material';
+import { Box } from '@mui/material';
 import './App.css';
 import CalculatePage from './Components/CalculatePage';
 import TopMenu from './Components/TopMenu';
 import { useState, useEffect } from 'react';
 import ClockStandsHistoryPage from './Components/ClockStandsHistoryPage';
 import Loading from './Components/Loading';
+import PostClockStandPage from './Components/PostClockStandPage';
 
 const MONTHS = [
     'JANUARY',
@@ -55,9 +56,6 @@ function App() {
         };
     }, []);
 
-    
-
-
     if (loading) {
         return (
             <Box
@@ -84,14 +82,14 @@ function App() {
     } else if (page === 'POST') {
         return (
             <>
-                <TopMenu setPage={setPage}/>
-                <Typography>Post Data</Typography>
+                <TopMenu setPage={setPage} />
+                <PostClockStandPage />
             </>
         );
     } else if (page === 'PREV') {
         return (
             <>
-                <TopMenu setPage={setPage}/>
+                <TopMenu setPage={setPage} />
                 <ClockStandsHistoryPage />
             </>
         );
