@@ -45,6 +45,7 @@ export default function TopMenu({setPage}) {
                         <Button variant='contained' onClick={() => setPage('CALC')}>Calculate</Button>
                         <Button variant='contained' onClick={() => setPage('POST')}>Post</Button>
                         <Button variant='contained' onClick={() => setPage('PREV')}>See previous data</Button>
+                        <Button variant='contained' href='/logout'>Logout</Button>
                     </Box>
                 </Toolbar>
             </Container>
