@@ -7,6 +7,7 @@ import com.codecool.backend.service.ClockStandsService;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 
 @SpringBootApplication
 public class BackendApplication {
@@ -15,16 +16,4 @@ public class BackendApplication {
         SpringApplication.run(BackendApplication.class, args);
     }
 
-    @Bean
-    public Database database() {
-        return new Database("jdbc:postgresql://localhost:5432/postgres", "postgres", System.getenv("databasePassword"));
-    }
-    @Bean
-    public ClockStandsDao clockStandsDao() {
-        return new ClockStandsDaoJDBC(database());
-    }
-    @Bean
-    public ClockStandsService clockStandsService() {
-        return new ClockStandsService(clockStandsDao());
-    }
 }
