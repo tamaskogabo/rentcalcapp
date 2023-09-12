@@ -14,8 +14,30 @@ import java.util.List;
 public class ClockStandsDaoJDBC implements ClockStandsDao {
     private final Database database;
 
-    public ClockStandsDaoJDBC(Database database) {
+    public ClockStandsDaoJDBC(Database database) throws SQLException {
         this.database = database;
+        initTable();
+    }
+
+    private void initTable() throws SQLException {
+        String query = """
+                create table if not exists clockstands
+                (
+                    id               serial
+                        primary key,
+                    date             timestamp default CURRENT_TIMESTAMP,
+                    warmwaterstand   numeric(6, 3),
+                    coldwaterstand   numeric(6, 3),
+                    electricitystand integer,
+                    warmingbill      integer,
+                    gasbill          integer
+                );""";
+        Connection connection = database.getConnection();
+        try (Statement stmt = connection.createStatement()) {
+            stmt.executeUpdate(query);
+        } catch (SQLException e) {
+            throw new SQLException(e);
+        }
     }
 
     @Override

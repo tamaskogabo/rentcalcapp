@@ -7,18 +7,20 @@ import com.codecool.backend.service.ClockStandsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.sql.SQLException;
+
 @Configuration
 public class ApplicationConfig {
     @Bean
     public Database database() {
-        return new Database("jdbc:postgresql://localhost:5432/postgres", "postgres", System.getenv("databasePassword"));
+        return new Database(System.getenv("databaseURL"), System.getenv("databaseUsername"), System.getenv("databasePassword"));
     }
     @Bean
-    public ClockStandsDao clockStandsDao() {
+    public ClockStandsDao clockStandsDao() throws SQLException {
         return new ClockStandsDaoJDBC(database());
     }
     @Bean
-    public ClockStandsService clockStandsService() {
+    public ClockStandsService clockStandsService() throws SQLException {
         return new ClockStandsService(clockStandsDao());
     }
 }

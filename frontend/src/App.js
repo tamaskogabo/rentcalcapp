@@ -1,4 +1,4 @@
-import { Box } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import './App.css';
 import CalculatePage from './Components/CalculatePage';
 import TopMenu from './Components/TopMenu';
@@ -46,6 +46,8 @@ function App() {
             if (!ignore) {
                 setLastMonthData(resultLastMonth);
                 setThisMonthData(resultThisMonth);
+                console.log(thisMonthData);
+                console.log(lastMonthData);
                 setLoading(false);
             }
         }
@@ -69,7 +71,22 @@ function App() {
         );
     }
 
-    if (page === 'CALC') {
+    if (
+        page === 'CALC' &&
+        (lastMonthData.length === null || thisMonthData.length === null)
+    ) {
+        return (
+            <>
+                <TopMenu setPage={setPage} />
+                <Box>
+                    <Typography variant='h3' textAlign='center'>
+                        There has to be data from this and the previous month to
+                        process calculations...
+                    </Typography>
+                </Box>
+            </>
+        );
+    } else if (page === 'CALC') {
         return (
             <>
                 <TopMenu setPage={setPage} />

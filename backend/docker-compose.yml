@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  rentcalc-app:
+    image: 'docker-spring-boot-postgres:latest'
+    build:
+      context: .
+    container_name: rentcalc-app
+    ports:
+    - "8080:8080"
+    expose:
+    - "8080"
+    depends_on:
+      - rentcalc-db
+    environment:
+      - databasePassword=postgres
+      - databaseURL=jdbc:postgresql://rentcalc-db:5432/postgres
+      - databaseUsername=postgres
+      - PASSWORD=admin
+      - USERNAME=admin
+
+  rentcalc-db:
+    image: 'postgres:13.1-alpine'
+    container_name: rentcalc-db
+    ports:
+      - "5432:5432"
+    expose:
+      - "5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
