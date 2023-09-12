@@ -171,8 +171,6 @@ INSERT INTO clockstands VALUES (default, TO_DATE('YOUR CURRENT DATE WITH THE PRE
 
 The application can be used to calculate the base rent, water usages, electricity costs of my rented apartment, based on how I am personally supposed to wire it each month. The costs to send depend on the current month, different calculations are made every odd month, every quarter-year month, and on every regular month.
 
-_For more examples, please refer to the [Documentation](https://example.com)_
-
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
