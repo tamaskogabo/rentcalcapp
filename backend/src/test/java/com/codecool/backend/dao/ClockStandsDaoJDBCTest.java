@@ -5,6 +5,7 @@ import com.codecool.backend.dao.model.ClockStands;
 import com.codecool.backend.database.Database;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.sql.SQLException;
@@ -45,5 +46,11 @@ class ClockStandsDaoJDBCTest {
         clockStandsDao.postClockStand(testClockStands);
         List<ClockStandsDto> actual = clockStandsDao.getAllClockStands();
         assertFalse(actual.isEmpty());
+    }
+
+    @Test
+    void getClockStandsByMonthAndYear() throws SQLException {
+        List<ClockStandsDto> actual = clockStandsDao.getClockStandByMonthAndYear(1, Month.JANUARY);
+        assertTrue(actual.isEmpty());
     }
 }

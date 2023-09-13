@@ -71,6 +71,7 @@ class ClockStandsServiceTest {
         assertEquals(expected.get(0).getInternetCost(), actual.get(0).getInternetCost());
         assertEquals(expected.get(0).getDateTime(), actual.get(0).getDateTime());
         assertEquals(expected.get(0).getColdWaterStand(), actual.get(0).getColdWaterStand());
+        Mockito.verify(clockStandsDao, Mockito.times(1)).getAllClockStands();
     }
 
     @Test
@@ -88,6 +89,7 @@ class ClockStandsServiceTest {
         assertEquals(expected.get(0).getInternetCost(), actual.get(0).getInternetCost());
         assertEquals(expected.get(0).getDateTime(), actual.get(0).getDateTime());
         assertEquals(expected.get(0).getColdWaterStand(), actual.get(0).getColdWaterStand());
+        Mockito.verify(clockStandsDao, Mockito.times(1)).getClockStandByMonthAndYear(2000, Month.JANUARY);
     }
 
     @Test
@@ -96,5 +98,6 @@ class ClockStandsServiceTest {
         Mockito.when(clockStandsDao.postClockStand(testClockStands)).thenReturn(true);
         boolean actual = clockStandsService.postClockStands(testClockStands);
         assertEquals(actual, expected);
+        Mockito.verify(clockStandsDao, Mockito.times(1)).postClockStand(testClockStands);
     }
 }
