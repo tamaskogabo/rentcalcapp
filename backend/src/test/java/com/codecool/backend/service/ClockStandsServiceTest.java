@@ -40,7 +40,8 @@ class ClockStandsServiceTest {
                 0,
                 0,
                 0,
-                0);
+                0)
+        ;
         testClockStandsDto = new ClockStandsDto(1,
                 LocalDateTime.of(2000,
                         Month.JANUARY,
@@ -51,7 +52,8 @@ class ClockStandsServiceTest {
                 0,
                 0,
                 0,
-                0);
+                0
+        );
     }
 
     @Test

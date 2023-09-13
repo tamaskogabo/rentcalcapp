@@ -109,4 +109,27 @@ public class ClockStandsDaoJDBC implements ClockStandsDao {
         }
         return false;
     }
+
+    @Override
+    public void deleteClockStandByYearAndMonth(int year, Month month) throws SQLException {
+        String query = """
+                DELETE FROM clockstands
+                    WHERE to_char(date, 'YYYY') = ?
+                    AND to_char(date, 'MM') = ?;
+                    """;
+        String monthString = "0";
+        if (Integer.toString(month.getValue()).length() == 1) {
+            monthString += Integer.toString(month.getValue());
+        } else {
+            monthString = Integer.toString(month.getValue());
+        }
+        Connection connection = database.getConnection();
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, Integer.toString(year));
+            preparedStatement.setString(2, monthString);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new SQLException(e);
+        }
+    }
 }

@@ -11,4 +11,5 @@ public interface ClockStandsDao {
     public List<ClockStandsDto> getAllClockStands() throws SQLException;
     public List<ClockStandsDto> getClockStandByMonthAndYear(int year, Month month) throws SQLException;
     public boolean postClockStand(ClockStands clockStands) throws SQLException;
+    public void deleteClockStandByYearAndMonth(int year, Month month) throws SQLException;
 }
