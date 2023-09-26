@@ -1,4 +1,4 @@
-import { Box, Typography } from '@mui/material';
+import { Box } from '@mui/material';
 import './App.css';
 import CalculatePage from './Components/CalculatePage';
 import TopMenu from './Components/TopMenu';

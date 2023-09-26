@@ -4,6 +4,8 @@ import com.codecool.backend.controller.dto.ClockStandsDto;
 import com.codecool.backend.dao.ClockStandsDao;
 import com.codecool.backend.dao.model.ClockStands;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 import java.sql.SQLException;
 import java.time.Month;
@@ -44,8 +46,11 @@ public class ClockStandsService {
         return result;
     }
 
-    public boolean postClockStands(ClockStands clockStands) throws SQLException {
-        return clockStandsDao.postClockStand(clockStands);
+    public ResponseEntity<String> postClockStands(ClockStands clockStands) throws SQLException {
+        boolean saveSuccessful = clockStandsDao.postClockStand(clockStands);
+        if (saveSuccessful) {
+            return new ResponseEntity<>("ClockStands saved.", HttpStatus.CREATED);
+        }
+        return new ResponseEntity<>("Save not successful.", HttpStatus.BAD_REQUEST);
     }
-
 }

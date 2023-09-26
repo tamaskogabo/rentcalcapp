@@ -61,11 +61,7 @@ export default function ClockStandsHistoryPage() {
                     <TableBody>
                         {clockstands.map((row) => (
                             <TableRow
-                                key={
-                                    new Date(row.dateTime)
-                                        .toISOString()
-                                        .split('T')[0]
-                                }
+                                key={row.dateTime}
                                 sx={{
                                     '&:last-child td, &:last-child th': {
                                         border: 0,
@@ -73,11 +69,7 @@ export default function ClockStandsHistoryPage() {
                                 }}
                             >
                                 <TableCell component='th' scope='row'>
-                                    {
-                                        new Date(row.dateTime)
-                                            .toISOString()
-                                            .split('T')[0]
-                                    }
+                                    {row.dateTime}
                                 </TableCell>
                                 <TableCell align='right'>
                                     {row.warmWaterStand}

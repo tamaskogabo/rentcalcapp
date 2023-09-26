@@ -1,9 +1,13 @@
 package com.codecool.backend.dao.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.Getter;
+
 import java.time.LocalDateTime;
 
 import static com.codecool.backend.dao.model.DefaultPrices.*;
 
+@Getter
 public class ClockStands {
     private final LocalDateTime dateTime;
     private final double warmWaterStand;
@@ -23,39 +27,8 @@ public class ClockStands {
         this.warmingBill = warmingBill;
     }
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
     public LocalDateTime getDateTime() {
         return dateTime;
-    }
-
-    public double getWarmWaterStand() {
-        return warmWaterStand;
-    }
-
-    public double getColdWaterStand() {
-        return coldWaterStand;
-    }
-
-    public int getElectricityStand() {
-        return electricityStand;
-    }
-
-    public int getWarmingBill() {
-        return warmingBill;
-    }
-
-    public int getGasBill() {
-        return gasBill;
-    }
-
-    public int getBaseRent() {
-        return baseRent;
-    }
-
-    public int getKkt() {
-        return kkt;
-    }
-
-    public int getInternetCost() {
-        return internetCost;
     }
 }

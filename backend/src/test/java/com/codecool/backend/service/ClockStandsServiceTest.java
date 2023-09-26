@@ -10,6 +10,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 import java.sql.SQLException;
 import java.time.LocalDateTime;
@@ -94,9 +96,9 @@ class ClockStandsServiceTest {
 
     @Test
     void postClockStands() throws SQLException {
-        boolean expected = true;
-        Mockito.when(clockStandsDao.postClockStand(testClockStands)).thenReturn(true);
-        boolean actual = clockStandsService.postClockStands(testClockStands);
+        ResponseEntity<String> expected = new ResponseEntity<>("ClockStands saved.", HttpStatus.CREATED);
+        Mockito.when(clockStandsDao.postClockStand(testClockStands)).thenReturn(expected.hasBody());
+        ResponseEntity<String> actual = clockStandsService.postClockStands(testClockStands);
         assertEquals(actual, expected);
         Mockito.verify(clockStandsDao, Mockito.times(1)).postClockStand(testClockStands);
     }

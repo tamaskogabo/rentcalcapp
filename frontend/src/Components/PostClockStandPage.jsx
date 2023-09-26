@@ -13,7 +13,7 @@ export default function PostClockStandPage() {
     const [openAlert, setOpenAlert] = useState(false);
     const [openSuccess, setOpenSuccess] = useState(false);
 
-    const handleClose = (event, reason) => {
+    const handleClose = (_event, reason) => {
         if (reason === 'clickaway') {
             return;
         }
@@ -26,19 +26,20 @@ export default function PostClockStandPage() {
         const form = e.target;
         const formData = new FormData(form);
         const formJson = Object.fromEntries(formData.entries());
-        const request = await fetch('/clockstands/', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(formJson),
-        });
-        const response = await request.json();
-        if (response == false) {
+        try {
+            const request = await fetch('/clockstands/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formJson),
+            });
+            const response = await request.json();
+            setOpenSuccess(true);
+            console.log(response);
+        } catch (error) {
             console.error('Already found an entry for this month on server!');
             setOpenAlert(true);
-        } else {
-            setOpenSuccess(true);
         }
     }
 
