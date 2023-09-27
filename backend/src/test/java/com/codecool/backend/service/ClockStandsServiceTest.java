@@ -44,18 +44,6 @@ class ClockStandsServiceTest {
                 0,
                 0)
         ;
-        testClockStandsDto = new ClockStandsDto(1,
-                LocalDateTime.of(2000,
-                        Month.JANUARY,
-                        1,
-                        0,
-                        0),
-                0,
-                0,
-                0,
-                0,
-                0
-        );
     }
 
     @Test
@@ -97,7 +85,7 @@ class ClockStandsServiceTest {
     @Test
     void postClockStands() throws SQLException {
         ResponseEntity<String> expected = new ResponseEntity<>("ClockStands saved.", HttpStatus.CREATED);
-        Mockito.when(clockStandsDao.postClockStand(testClockStands)).thenReturn(expected.hasBody());
+        Mockito.when(clockStandsDao.postClockStand(testClockStands)).thenReturn(expected);
         ResponseEntity<String> actual = clockStandsService.postClockStands(testClockStands);
         assertEquals(actual, expected);
         Mockito.verify(clockStandsDao, Mockito.times(1)).postClockStand(testClockStands);

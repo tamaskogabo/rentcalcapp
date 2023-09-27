@@ -3,6 +3,8 @@ package com.codecool.backend.dao;
 import com.codecool.backend.controller.dto.ClockStandsDto;
 import com.codecool.backend.dao.model.ClockStands;
 import com.codecool.backend.database.Database;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 import java.sql.*;
 import java.time.LocalDate;
@@ -88,7 +90,7 @@ public class ClockStandsDaoJDBC implements ClockStandsDao {
     }
 
     @Override
-    public boolean postClockStand(ClockStands clockStands) throws SQLException {
+    public ResponseEntity<String> postClockStand(ClockStands clockStands) throws SQLException {
         if (getClockStandByMonthAndYear(LocalDate.now().getYear(), LocalDate.now().getMonth()).isEmpty()) {
             String query = """
                     INSERT INTO clockstands VALUES (DEFAULT, DEFAULT, ?, ?, ?, ?, ?);
@@ -102,12 +104,12 @@ public class ClockStandsDaoJDBC implements ClockStandsDao {
                 preparedStatement.setInt(5, clockStands.getGasBill());
                 preparedStatement.addBatch();
                 preparedStatement.executeBatch();
-                return true;
+                return new ResponseEntity<>("ClockStands saved.", HttpStatus.CREATED);
             } catch (SQLException e) {
                 throw new SQLException(e);
             }
         }
-        return false;
+        return new ResponseEntity<>("Save not successful.", HttpStatus.BAD_REQUEST);
     }
 
     @Override

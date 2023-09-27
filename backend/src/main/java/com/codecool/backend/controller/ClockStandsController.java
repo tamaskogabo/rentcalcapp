@@ -1,5 +1,6 @@
 package com.codecool.backend.controller;
 
+import com.codecool.backend.controller.dto.ClockStandsDto;
 import com.codecool.backend.dao.model.ClockStands;
 import com.codecool.backend.service.ClockStandsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +35,7 @@ public class ClockStandsController {
 
     @PostMapping("/")
     public ResponseEntity<String> postClockStand(@RequestBody ClockStands clockStands) throws SQLException {
+        System.out.println(clockStands);
         return clockStandsService.postClockStands(clockStands);
     }
 }

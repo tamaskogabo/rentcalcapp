@@ -47,10 +47,6 @@ public class ClockStandsService {
     }
 
     public ResponseEntity<String> postClockStands(ClockStands clockStands) throws SQLException {
-        boolean saveSuccessful = clockStandsDao.postClockStand(clockStands);
-        if (saveSuccessful) {
-            return new ResponseEntity<>("ClockStands saved.", HttpStatus.CREATED);
-        }
-        return new ResponseEntity<>("Save not successful.", HttpStatus.BAD_REQUEST);
+        return clockStandsDao.postClockStand(clockStands);
     }
 }

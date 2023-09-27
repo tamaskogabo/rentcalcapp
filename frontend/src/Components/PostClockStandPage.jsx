@@ -26,8 +26,9 @@ export default function PostClockStandPage() {
         const form = e.target;
         const formData = new FormData(form);
         const formJson = Object.fromEntries(formData.entries());
+        console.log(formJson);
         try {
-            const request = await fetch('/clockstands/', {
+            const request = await fetch('/clockstands', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

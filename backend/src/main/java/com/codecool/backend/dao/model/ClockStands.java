@@ -1,13 +1,16 @@
 package com.codecool.backend.dao.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 
 import static com.codecool.backend.dao.model.DefaultPrices.*;
 
 @Getter
+@Setter
 public class ClockStands {
     private final LocalDateTime dateTime;
     private final double warmWaterStand;
