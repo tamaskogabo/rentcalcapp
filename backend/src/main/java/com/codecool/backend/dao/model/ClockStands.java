@@ -1,7 +1,6 @@
 package com.codecool.backend.dao.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -22,7 +21,11 @@ public class ClockStands {
     private final int kkt = KKT.price;
     private final int internetCost = INTERNET.price;
 
-    public ClockStands(LocalDateTime dateTime, double warmWaterStand, double coldWaterStand, int electricityStand, int warmingBill, int gasBill) {
+    public static ClockStands of(LocalDateTime date, double warmWaterStand, double coldWaterStand, int electricityStand, int warmingBill) {
+        return new ClockStands(date, warmWaterStand, coldWaterStand, electricityStand, warmingBill);
+    }
+
+    private ClockStands(LocalDateTime dateTime, double warmWaterStand, double coldWaterStand, int electricityStand, int warmingBill) {
         this.dateTime = dateTime;
         this.warmWaterStand = warmWaterStand;
         this.coldWaterStand = coldWaterStand;

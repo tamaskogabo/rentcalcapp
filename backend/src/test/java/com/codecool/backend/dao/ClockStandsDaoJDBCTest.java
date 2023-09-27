@@ -17,16 +17,15 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ClockStandsDaoJDBCTest {
 
-    Database db = new Database("jdbc:postgresql://localhost:5432/postgres", "postgres", "Gm7A7Dm7");
+    Database db = Database.of("jdbc:postgresql://localhost:5432/postgres", "postgres", "Gm7A7Dm7");
 
     ClockStandsDao clockStandsDao = new ClockStandsDaoJDBC(db);
 
-    ClockStands testClockStands = new ClockStands(
+    ClockStands testClockStands = ClockStands.of(
             LocalDateTime.of(2000, Month.JANUARY,
                     1,
                     0,
                     0),
-            0,
             0,
             0,
             0,

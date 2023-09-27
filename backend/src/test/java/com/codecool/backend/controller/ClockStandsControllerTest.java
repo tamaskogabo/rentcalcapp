@@ -1,7 +1,6 @@
 package com.codecool.backend.controller;
 
 import com.codecool.backend.dao.ClockStandsDao;
-import com.codecool.backend.dao.ClockStandsDaoJDBC;
 import com.codecool.backend.dao.model.ClockStands;
 import com.codecool.backend.service.ClockStandsService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -12,23 +11,16 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.DynamicPropertyRegistry;
-import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-import org.testcontainers.containers.PostgreSQLContainer;
-import org.testcontainers.junit.jupiter.Container;
-import org.testcontainers.junit.jupiter.Testcontainers;
 
 import java.time.LocalDateTime;
 import java.time.Month;
@@ -55,12 +47,8 @@ class ClockStandsControllerTest {
 
     @BeforeEach
     void setUp() {
-        validTestClockStands = new ClockStands(
-                LocalDateTime.of(2000, Month.JANUARY,
-                        1,
-                        0,
-                        0),
-                0,
+        validTestClockStands = ClockStands.of(
+                LocalDateTime.of(2000, Month.JANUARY, 1, 0, 0),
                 0,
                 0,
                 0,

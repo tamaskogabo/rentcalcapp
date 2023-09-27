@@ -33,7 +33,7 @@ class ClockStandsServiceTest {
     @BeforeEach
     void setUp() {
         clockStandsService = new ClockStandsService(clockStandsDao);
-        testClockStands = new ClockStands(
+        testClockStands = ClockStands.of(
                 LocalDateTime.of(2000, Month.JANUARY,
                         1,
                         0,
@@ -41,9 +41,16 @@ class ClockStandsServiceTest {
                 0,
                 0,
                 0,
+                0);
+        testClockStandsDto = new ClockStandsDto(0, LocalDateTime.of(2000, Month.JANUARY,
+                1,
                 0,
-                0)
-        ;
+                0),
+                0,
+                0,
+                0,
+                0,
+                0);
     }
 
     @Test

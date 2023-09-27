@@ -9,7 +9,11 @@ public class Database {
     private final String username;
     private final String password;
 
-    public Database(String url, String username, String password) {
+    public static Database of(String url, String username, String password) {
+        return new Database(url, username, password);
+    }
+
+    private Database(String url, String username, String password) {
         this.url = url;
         this.username = username;
         this.password = password;

@@ -6,12 +6,14 @@ import com.codecool.backend.dao.model.ClockStands;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
 import java.time.Month;
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public class ClockStandsService {
     private final ClockStandsDao clockStandsDao;
 
@@ -33,13 +35,12 @@ public class ClockStandsService {
     private List<ClockStands> prepareClockStands(List<ClockStandsDto> DTOs) {
         List<ClockStands> result = new ArrayList<>();
         for (ClockStandsDto dto : DTOs) {
-            result.add(new ClockStands(
+            result.add(ClockStands.of(
                             dto.date(),
                             dto.warmWaterStand(),
                             dto.coldWaterStand(),
                             dto.electricityStand(),
-                            dto.warmingBill(),
-                            dto.gasBill()
+                            dto.warmingBill()
                     )
             );
         }
