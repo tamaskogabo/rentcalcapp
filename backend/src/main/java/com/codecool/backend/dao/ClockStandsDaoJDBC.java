@@ -1,6 +1,6 @@
 package com.codecool.backend.dao;
 
-import com.codecool.backend.controller.dto.ClockStandsDto;
+import com.codecool.backend.dao.dto.ClockStandsDto;
 import com.codecool.backend.dao.model.ClockStands;
 import com.codecool.backend.database.Database;
 import org.springframework.http.HttpStatus;

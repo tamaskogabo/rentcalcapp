@@ -1,12 +1,10 @@
 package com.codecool.backend.dao;
 
-import com.codecool.backend.controller.dto.ClockStandsDto;
+import com.codecool.backend.dao.dto.ClockStandsDto;
 import com.codecool.backend.dao.model.ClockStands;
 import com.codecool.backend.database.Database;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.sql.SQLException;
 import java.time.LocalDateTime;

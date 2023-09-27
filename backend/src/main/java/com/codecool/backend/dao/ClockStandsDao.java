@@ -1,6 +1,6 @@
 package com.codecool.backend.dao;
 
-import com.codecool.backend.controller.dto.ClockStandsDto;
+import com.codecool.backend.dao.dto.ClockStandsDto;
 import com.codecool.backend.dao.model.ClockStands;
 import org.springframework.http.ResponseEntity;
 

@@ -1,4 +1,4 @@
-package com.codecool.backend.controller.dto;
+package com.codecool.backend.dao.dto;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
