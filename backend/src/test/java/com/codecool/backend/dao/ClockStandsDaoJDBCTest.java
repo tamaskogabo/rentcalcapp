@@ -1,6 +1,5 @@
 package com.codecool.backend.dao;
 
-import com.codecool.backend.dao.dto.ClockStandsDto;
 import com.codecool.backend.dao.model.ClockStands;
 import com.codecool.backend.database.Database;
 import org.junit.jupiter.api.AfterEach;
@@ -19,7 +18,7 @@ class ClockStandsDaoJDBCTest {
 
     ClockStandsDao clockStandsDao = new ClockStandsDaoJDBC(db);
 
-    ClockStands testClockStands = ClockStands.of(
+    ClockStands testClockStands = com.codecool.backend.dao.model.ClockStands.of(
             LocalDateTime.of(2000, Month.JANUARY,
                     1,
                     0,
@@ -41,13 +40,13 @@ class ClockStandsDaoJDBCTest {
     @Test
     void getAllClockStands() throws SQLException {
         clockStandsDao.postClockStand(testClockStands);
-        List<ClockStandsDto> actual = clockStandsDao.getAllClockStands();
+        List<ClockStands> actual = clockStandsDao.getAllClockStands();
         assertFalse(actual.isEmpty());
     }
 
     @Test
     void getClockStandsByMonthAndYear() throws SQLException {
-        List<ClockStandsDto> actual = clockStandsDao.getClockStandByMonthAndYear(1, Month.JANUARY);
+        List<ClockStands> actual = clockStandsDao.getClockStandByMonthAndYear(1, Month.JANUARY);
         assertTrue(actual.isEmpty());
     }
 }

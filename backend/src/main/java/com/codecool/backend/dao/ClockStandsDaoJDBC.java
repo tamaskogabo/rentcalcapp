@@ -1,6 +1,5 @@
 package com.codecool.backend.dao;
 
-import com.codecool.backend.dao.dto.ClockStandsDto;
 import com.codecool.backend.dao.model.ClockStands;
 import com.codecool.backend.database.Database;
 import org.springframework.http.HttpStatus;
@@ -43,19 +42,19 @@ public class ClockStandsDaoJDBC implements ClockStandsDao {
     }
 
     @Override
-    public List<ClockStandsDto> getAllClockStands() throws SQLException {
+    public List<ClockStands> getAllClockStands() throws SQLException {
         String query = "SELECT * FROM clockstands;";
         Connection connection = database.getConnection();
         try (Statement stmt = connection.createStatement()) {
             ResultSet rs = stmt.executeQuery(query);
-            return prepareClockStandDtos(rs);
+            return prepareClockStands(rs);
         } catch (SQLException e) {
             throw new SQLException(e);
         }
     }
 
     @Override
-    public List<ClockStandsDto> getClockStandByMonthAndYear(int year, Month month) throws SQLException {
+    public List<ClockStands> getClockStandByMonthAndYear(int year, Month month) throws SQLException {
         String query = """
                 SELECT *
                 FROM clockstands
@@ -66,14 +65,14 @@ public class ClockStandsDaoJDBC implements ClockStandsDao {
             preparedStatement.setInt(1, month.getValue());
             preparedStatement.setInt(2, year);
             ResultSet rs = preparedStatement.executeQuery();
-            return prepareClockStandDtos(rs);
+            return prepareClockStands(rs);
         } catch (SQLException e) {
             throw new SQLException(e);
         }
     }
 
-    private static List<ClockStandsDto> prepareClockStandDtos(ResultSet rs) throws SQLException {
-        List<ClockStandsDto> clockStandsDtos = new ArrayList<>();
+    private static List<ClockStands> prepareClockStands(ResultSet rs) throws SQLException {
+        List<ClockStands> clockStands = new ArrayList<>();
         while (rs.next()) {
             int ID = rs.getInt("id");
             LocalDateTime localDate = rs.getTimestamp("date").toLocalDateTime();
@@ -81,16 +80,15 @@ public class ClockStandsDaoJDBC implements ClockStandsDao {
             double coldwaterstand = rs.getDouble("coldwaterstand");
             int electricityStand = rs.getInt("electricitystand");
             int warmingBill = rs.getInt("warmingbill");
-            int gasbill = rs.getInt("gasbill");
-            clockStandsDtos.add(new ClockStandsDto(ID, localDate, warmwaterstand, coldwaterstand, electricityStand, warmingBill, gasbill));
+            clockStands.add(ClockStands.of(localDate, warmwaterstand, coldwaterstand, electricityStand, warmingBill));
             System.out.println(ID + ", " + localDate + ", " + warmwaterstand +
-                    ", " + coldwaterstand + ", " + electricityStand + ", " + warmingBill + ", " + gasbill);
+                    ", " + coldwaterstand + ", " + electricityStand + ", " + warmingBill);
         }
-        return clockStandsDtos;
+        return clockStands;
     }
 
     @Override
-    public ResponseEntity<String> postClockStand(ClockStands clockStands) throws SQLException {
+    public ResponseEntity<String> postClockStand(com.codecool.backend.dao.model.ClockStands clockStands) throws SQLException {
         if (getClockStandByMonthAndYear(LocalDate.now().getYear(), LocalDate.now().getMonth()).isEmpty()) {
             String query = """
                     INSERT INTO clockstands VALUES (DEFAULT, DEFAULT, ?, ?, ?, ?, ?);

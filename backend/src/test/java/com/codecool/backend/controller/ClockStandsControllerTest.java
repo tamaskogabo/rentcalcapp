@@ -1,5 +1,6 @@
 package com.codecool.backend.controller;
 
+import com.codecool.backend.controller.dtos.ClockStandsRequest;
 import com.codecool.backend.dao.ClockStandsDao;
 import com.codecool.backend.dao.model.ClockStands;
 import com.codecool.backend.service.ClockStandsService;
@@ -27,7 +28,7 @@ import java.time.Month;
 import java.util.ArrayList;
 import java.util.List;
 
-@SpringBootTest
+@SpringBootTest()
 @AutoConfigureMockMvc
 @ActiveProfiles(value = "test")
 class ClockStandsControllerTest {
@@ -49,10 +50,10 @@ class ClockStandsControllerTest {
     void setUp() {
         validTestClockStands = ClockStands.of(
                 LocalDateTime.of(2000, Month.JANUARY, 1, 0, 0),
-                0,
-                0,
-                0,
-                0
+                51,
+                51,
+                51,
+                51
         );
     }
 
@@ -104,8 +105,24 @@ class ClockStandsControllerTest {
     }
 
     @Test
+    void getClockStandsByYearAndMonth_noYearInRequest() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/clockstands/date")
+                        .param("month", "JANUARY"))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(MockMvcResultMatchers.status().isBadRequest());
+    }
+
+    @Test
+    void getClockStandsByYearAndMonth_noYearAndMonthInRequest() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/clockstands/date"))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(MockMvcResultMatchers.status().isBadRequest());
+    }
+
+    @Test
     void postClockStand_validRequest() throws Exception {
-        String jsonToSend = "{\"warmWaterStand\":\"999\",\"coldWaterStand\":\"999\",\"electricityStand\":\"5555\",\"warmingBill\":\"5555\"}";
+        ClockStandsRequest request = new ClockStandsRequest(51, 51, 51, 51);
+        String jsonToSend = objectMapper.writeValueAsString(request);
         System.out.println(jsonToSend);
         ResponseEntity<String> expected = new ResponseEntity<>("ClockStands saved.", HttpStatus.CREATED);
         Mockito.when(clockStandsService.postClockStands(Mockito.any())).thenReturn(expected);
@@ -117,5 +134,26 @@ class ClockStandsControllerTest {
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().isCreated())
                 .andExpect(MockMvcResultMatchers.content().string("ClockStands saved."));
+    }
+
+    @Test
+    void postClockStand_noRequestBody() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.post("/clockstands/")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON)
+                        .characterEncoding("UTF-8"))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(MockMvcResultMatchers.status().isBadRequest());
+    }
+    @Test
+    void postClockStand_invalidRequestBody() throws Exception {
+        String requestBody = "{\"invalidKey\" : \"false\"}";
+        mockMvc.perform(MockMvcRequestBuilders.post("/clockstands/")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON)
+                        .characterEncoding("UTF-8")
+                        .content(requestBody))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(MockMvcResultMatchers.status().isBadRequest());
     }
 }

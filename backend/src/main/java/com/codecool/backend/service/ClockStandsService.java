@@ -1,7 +1,6 @@
 package com.codecool.backend.service;
 
 import com.codecool.backend.controller.dtos.ClockStandsRequest;
-import com.codecool.backend.dao.dto.ClockStandsDto;
 import com.codecool.backend.dao.ClockStandsDao;
 import com.codecool.backend.dao.model.ClockStands;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,28 +22,11 @@ public class ClockStandsService {
     }
 
     public List<ClockStands> getAllClockStands() throws SQLException {
-        List<ClockStandsDto> DTOs = clockStandsDao.getAllClockStands();
-        return prepareClockStands(DTOs);
+        return clockStandsDao.getAllClockStands();
     }
 
     public List<ClockStands> getClockStandsByMonthAndYear(int year, Month month) throws SQLException {
-        List<ClockStandsDto> DTOs = clockStandsDao.getClockStandByMonthAndYear(year, month);
-        return prepareClockStands(DTOs);
-    }
-
-    private List<ClockStands> prepareClockStands(List<ClockStandsDto> DTOs) {
-        List<ClockStands> result = new ArrayList<>();
-        for (ClockStandsDto dto : DTOs) {
-            result.add(ClockStands.of(
-                            dto.date(),
-                            dto.warmWaterStand(),
-                            dto.coldWaterStand(),
-                            dto.electricityStand(),
-                            dto.warmingBill()
-                    )
-            );
-        }
-        return result;
+        return clockStandsDao.getClockStandByMonthAndYear(year, month);
     }
 
     public ResponseEntity<String> postClockStands(ClockStandsRequest request) throws SQLException {

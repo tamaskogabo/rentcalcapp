@@ -1,7 +1,6 @@
 package com.codecool.backend.service;
 
 import com.codecool.backend.controller.dtos.ClockStandsRequest;
-import com.codecool.backend.dao.dto.ClockStandsDto;
 import com.codecool.backend.dao.ClockStandsDao;
 import com.codecool.backend.dao.model.ClockStands;
 import org.junit.jupiter.api.BeforeEach;
@@ -25,7 +24,6 @@ class ClockStandsServiceTest {
 
     ClockStandsService clockStandsService;
     ClockStands testClockStands;
-    ClockStandsDto testClockStandsDto;
     ClockStandsRequest testClockStandsRequest;
 
     @Mock
@@ -34,24 +32,11 @@ class ClockStandsServiceTest {
     @BeforeEach
     void setUp() {
         clockStandsService = new ClockStandsService(clockStandsDao);
-        testClockStands = ClockStands.of(
-                LocalDateTime.of(2000, Month.JANUARY,
-                        1,
-                        0,
-                        0),
-                0,
-                0,
-                0,
-                0);
-        testClockStandsDto = new ClockStandsDto(0, LocalDateTime.of(2000, Month.JANUARY,
-                1,
-                0,
-                0),
-                0,
-                0,
-                0,
-                0,
-                0);
+        testClockStands = ClockStands.of(LocalDateTime.of(2000, Month.JANUARY, 1, 0, 0),
+                51,
+                51,
+                51,
+                51);
 
         testClockStandsRequest = new ClockStandsRequest(
                 0,
@@ -61,9 +46,9 @@ class ClockStandsServiceTest {
     }
 
     @Test
-    void getAllClockStands() throws SQLException {
+    void getAllClockStands_withOneEntry() throws SQLException {
         List<ClockStands> expected = List.of(testClockStands);
-        Mockito.when(clockStandsDao.getAllClockStands()).thenReturn(List.of(testClockStandsDto));
+        Mockito.when(clockStandsDao.getAllClockStands()).thenReturn(List.of(testClockStands));
         List<ClockStands> actual = clockStandsService.getAllClockStands();
         assertEquals(expected.get(0).getColdWaterStand(), actual.get(0).getColdWaterStand());
         assertEquals(expected.get(0).getElectricityStand(), actual.get(0).getElectricityStand());
@@ -79,9 +64,9 @@ class ClockStandsServiceTest {
     }
 
     @Test
-    void getClockStandsByMonthAndYear() throws SQLException {
+    void getClockStandsByMonthAndYear_withOneEntry() throws SQLException {
         List<ClockStands> expected = List.of(testClockStands);
-        Mockito.when(clockStandsDao.getClockStandByMonthAndYear(2000, Month.JANUARY)).thenReturn(List.of(testClockStandsDto));
+        Mockito.when(clockStandsDao.getClockStandByMonthAndYear(2000, Month.JANUARY)).thenReturn(List.of(testClockStands));
         List<ClockStands> actual = clockStandsService.getClockStandsByMonthAndYear(2000, Month.JANUARY);
         assertEquals(expected.get(0).getColdWaterStand(), actual.get(0).getColdWaterStand());
         assertEquals(expected.get(0).getElectricityStand(), actual.get(0).getElectricityStand());
@@ -97,11 +82,11 @@ class ClockStandsServiceTest {
     }
 
     @Test
-    void postClockStands() throws SQLException {
+    void postClockStands_shouldWork() throws SQLException {
         ResponseEntity<String> expected = new ResponseEntity<>("ClockStands saved.", HttpStatus.CREATED);
         Mockito.when(clockStandsDao.postClockStand(Mockito.any(ClockStands.class))).thenReturn(expected);
         ResponseEntity<String> actual = clockStandsService.postClockStands(testClockStandsRequest);
         assertEquals(actual, expected);
-        Mockito.verify(clockStandsDao, Mockito.times(1)).postClockStand(Mockito.any(ClockStands.class));
+        Mockito.verify(clockStandsDao, Mockito.times(1)).postClockStand(Mockito.any(com.codecool.backend.dao.model.ClockStands.class));
     }
 }

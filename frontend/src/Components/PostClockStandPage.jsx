@@ -12,6 +12,7 @@ import React, { useState } from 'react';
 export default function PostClockStandPage() {
     const [openAlert, setOpenAlert] = useState(false);
     const [openSuccess, setOpenSuccess] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
 
     const handleClose = (_event, reason) => {
         if (reason === 'clickaway') {
@@ -28,7 +29,7 @@ export default function PostClockStandPage() {
         const formJson = Object.fromEntries(formData.entries());
         console.log(formJson);
         try {
-            const request = await fetch('/clockstands', {
+            const request = await fetch('/clockstands/', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -36,10 +37,17 @@ export default function PostClockStandPage() {
                 body: JSON.stringify(formJson),
             });
             const response = await request.json();
-            setOpenSuccess(true);
-            console.log(response);
+            if (response.status !== '201') {
+                console.error('Something went wrong on server, maybe inpus values are invalid!');
+                setErrorMessage('Something went wrong on server, maybe inpus values are invalid!');
+                setOpenAlert(true);
+            } else {
+                setOpenSuccess(true);
+                console.log(response);
+            }
         } catch (error) {
             console.error('Already found an entry for this month on server!');
+            setErrorMessage('Already found an entry for this month on server!');
             setOpenAlert(true);
         }
     }
@@ -104,7 +112,7 @@ export default function PostClockStandPage() {
                 onClose={handleClose}
             >
                 <Alert severity='error'>
-                    Already found an entry for this month!
+                    {errorMessage}
                 </Alert>
             </Snackbar>
             <Snackbar

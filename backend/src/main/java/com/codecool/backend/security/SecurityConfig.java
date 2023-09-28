@@ -19,7 +19,7 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity(debug = true)
-@Profile("secure")
+@Profile("production")
 public class SecurityConfig {
 
     @Bean
