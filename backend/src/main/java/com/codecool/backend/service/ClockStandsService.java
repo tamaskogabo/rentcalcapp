@@ -4,6 +4,7 @@ import com.codecool.backend.controller.dtos.ClockStandsRequest;
 import com.codecool.backend.dao.ClockStandsDao;
 import com.codecool.backend.dao.model.ClockStands;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -30,6 +31,9 @@ public class ClockStandsService {
     }
 
     public ResponseEntity<String> postClockStands(ClockStandsRequest request) throws SQLException {
-        return clockStandsDao.postClockStand(request.createClockStands());
+        if (clockStandsDao.postClockStand(request.createClockStands())) {
+            return new ResponseEntity<>("ClockStands saved.", HttpStatus.CREATED);
+        }
+        return new ResponseEntity<>("Save not successful.", HttpStatus.BAD_REQUEST);
     }
 }

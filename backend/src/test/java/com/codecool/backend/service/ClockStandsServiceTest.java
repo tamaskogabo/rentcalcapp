@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.Month;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -50,41 +51,41 @@ class ClockStandsServiceTest {
         List<ClockStands> expected = List.of(testClockStands);
         Mockito.when(clockStandsDao.getAllClockStands()).thenReturn(List.of(testClockStands));
         List<ClockStands> actual = clockStandsService.getAllClockStands();
-        assertEquals(expected.get(0).getColdWaterStand(), actual.get(0).getColdWaterStand());
-        assertEquals(expected.get(0).getElectricityStand(), actual.get(0).getElectricityStand());
-        assertEquals(expected.get(0).getWarmWaterStand(), actual.get(0).getWarmWaterStand());
-        assertEquals(expected.get(0).getGasBill(), actual.get(0).getGasBill());
-        assertEquals(expected.get(0).getWarmingBill(), actual.get(0).getWarmingBill());
-        assertEquals(expected.get(0).getBaseRent(), actual.get(0).getBaseRent());
-        assertEquals(expected.get(0).getKkt(), actual.get(0).getKkt());
-        assertEquals(expected.get(0).getInternetCost(), actual.get(0).getInternetCost());
-        assertEquals(expected.get(0).getDateTime(), actual.get(0).getDateTime());
-        assertEquals(expected.get(0).getColdWaterStand(), actual.get(0).getColdWaterStand());
+        assertEquals(expected, actual);
+        Mockito.verify(clockStandsDao, Mockito.times(1)).getAllClockStands();
+    }
+
+    @Test
+    void getAllClockStands_noEntry() throws SQLException {
+        List<ClockStands> expected = new ArrayList<>();
+        Mockito.when(clockStandsDao.getAllClockStands()).thenReturn(expected);
+        List<ClockStands> actual = clockStandsService.getAllClockStands();
+        assertEquals(expected, actual);
         Mockito.verify(clockStandsDao, Mockito.times(1)).getAllClockStands();
     }
 
     @Test
     void getClockStandsByMonthAndYear_withOneEntry() throws SQLException {
         List<ClockStands> expected = List.of(testClockStands);
-        Mockito.when(clockStandsDao.getClockStandByMonthAndYear(2000, Month.JANUARY)).thenReturn(List.of(testClockStands));
+        Mockito.when(clockStandsDao.getClockStandByMonthAndYear(2000, Month.JANUARY)).thenReturn(expected);
         List<ClockStands> actual = clockStandsService.getClockStandsByMonthAndYear(2000, Month.JANUARY);
-        assertEquals(expected.get(0).getColdWaterStand(), actual.get(0).getColdWaterStand());
-        assertEquals(expected.get(0).getElectricityStand(), actual.get(0).getElectricityStand());
-        assertEquals(expected.get(0).getWarmWaterStand(), actual.get(0).getWarmWaterStand());
-        assertEquals(expected.get(0).getGasBill(), actual.get(0).getGasBill());
-        assertEquals(expected.get(0).getWarmingBill(), actual.get(0).getWarmingBill());
-        assertEquals(expected.get(0).getBaseRent(), actual.get(0).getBaseRent());
-        assertEquals(expected.get(0).getKkt(), actual.get(0).getKkt());
-        assertEquals(expected.get(0).getInternetCost(), actual.get(0).getInternetCost());
-        assertEquals(expected.get(0).getDateTime(), actual.get(0).getDateTime());
-        assertEquals(expected.get(0).getColdWaterStand(), actual.get(0).getColdWaterStand());
+        assertEquals(expected, actual);
         Mockito.verify(clockStandsDao, Mockito.times(1)).getClockStandByMonthAndYear(2000, Month.JANUARY);
     }
 
     @Test
-    void postClockStands_shouldWork() throws SQLException {
+    void postClockStands_shouldWork_happyCase() throws SQLException {
         ResponseEntity<String> expected = new ResponseEntity<>("ClockStands saved.", HttpStatus.CREATED);
-        Mockito.when(clockStandsDao.postClockStand(Mockito.any(ClockStands.class))).thenReturn(expected);
+        Mockito.when(clockStandsDao.postClockStand(Mockito.any(ClockStands.class))).thenReturn(true);
+        ResponseEntity<String> actual = clockStandsService.postClockStands(testClockStandsRequest);
+        assertEquals(actual, expected);
+        Mockito.verify(clockStandsDao, Mockito.times(1)).postClockStand(Mockito.any(com.codecool.backend.dao.model.ClockStands.class));
+    }
+
+    @Test
+    void postClockStands_shouldWork_sadCase() throws SQLException {
+        ResponseEntity<String> expected = new ResponseEntity<>("Save not successful.", HttpStatus.BAD_REQUEST);
+        Mockito.when(clockStandsDao.postClockStand(Mockito.any(ClockStands.class))).thenReturn(false);
         ResponseEntity<String> actual = clockStandsService.postClockStands(testClockStandsRequest);
         assertEquals(actual, expected);
         Mockito.verify(clockStandsDao, Mockito.times(1)).postClockStand(Mockito.any(com.codecool.backend.dao.model.ClockStands.class));
