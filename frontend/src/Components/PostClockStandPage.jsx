@@ -27,7 +27,6 @@ export default function PostClockStandPage() {
         const form = e.target;
         const formData = new FormData(form);
         const formJson = Object.fromEntries(formData.entries());
-        console.log(formJson);
         try {
             const request = await fetch('/clockstands/', {
                 method: 'POST',
@@ -36,18 +35,18 @@ export default function PostClockStandPage() {
                 },
                 body: JSON.stringify(formJson),
             });
-            const response = await request.json();
-            if (response.status !== '201') {
-                console.error('Something went wrong on server, maybe inpus values are invalid!');
-                setErrorMessage('Something went wrong on server, maybe inpus values are invalid!');
+            console.log(request);
+            if (request.status !== 201 ) {
+                console.error('Something went wrong on server, maybe input values are invalid, or there is an entry in the DB already for this month!');
+                setErrorMessage('Something went wrong on server, maybe input values are invalid, or there is an entry in the DB already for this month!');
                 setOpenAlert(true);
             } else {
                 setOpenSuccess(true);
-                console.log(response);
+                console.log(request);
             }
         } catch (error) {
-            console.error('Already found an entry for this month on server!');
-            setErrorMessage('Already found an entry for this month on server!');
+            console.error(error);
+            setErrorMessage('Something went wrong on server, maybe input values are invalid, or there is an entry in the DB already for this month!');
             setOpenAlert(true);
         }
     }

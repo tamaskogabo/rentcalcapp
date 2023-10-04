@@ -9,7 +9,7 @@ public class Database {
     private final String username;
     private final String password;
 
-    public static Database of(String url, String username, String password) {
+    public static Database withSettings(String url, String username, String password) {
         return new Database(url, username, password);
     }
 
@@ -27,5 +27,14 @@ public class Database {
             System.err.println("Could not create database connection.");
             throw new RuntimeException(ex);
         }
+    }
+
+    /**
+     * Returns the basic information about the setup of the DB connection in the following format:
+     * [DB URL: url, DB Username: username]
+     */
+    @Override
+    public String toString() {
+        return "[DB URL: " + url + ", DB Username: " + username + "]";
     }
 }

@@ -37,4 +37,19 @@ public class ClockStands {
     public LocalDateTime getDateTime() {
         return dateTime;
     }
+
+    @Override
+    public String toString() {
+        return "ClockStands{" +
+                "dateTime=" + dateTime +
+                ", warmWaterStand=" + warmWaterStand +
+                ", coldWaterStand=" + coldWaterStand +
+                ", electricityStand=" + electricityStand +
+                ", warmingBill=" + warmingBill +
+                ", gasBill=" + gasBill +
+                ", baseRent=" + baseRent +
+                ", kkt=" + kkt +
+                ", internetCost=" + internetCost +
+                '}';
+    }
 }

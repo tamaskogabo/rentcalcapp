@@ -2,6 +2,7 @@ package com.codecool.backend.dao;
 
 import com.codecool.backend.dao.model.ClockStands;
 import com.codecool.backend.database.Database;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -12,12 +13,14 @@ import java.time.Month;
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 public class ClockStandsDaoJDBC implements ClockStandsDao {
     private final Database database;
 
     public ClockStandsDaoJDBC(Database database) throws SQLException {
         this.database = database;
         initTable();
+        log.info("Database connection settings: {}", database);
     }
 
     private void initTable() throws SQLException {
@@ -81,6 +84,7 @@ public class ClockStandsDaoJDBC implements ClockStandsDao {
             int electricityStand = rs.getInt("electricitystand");
             int warmingBill = rs.getInt("warmingbill");
             clockStands.add(ClockStands.of(localDate, warmwaterstand, coldwaterstand, electricityStand, warmingBill));
+            System.out.println("Requested clockstand:");
             System.out.println(ID + ", " + localDate + ", " + warmwaterstand +
                     ", " + coldwaterstand + ", " + electricityStand + ", " + warmingBill);
         }
@@ -88,7 +92,8 @@ public class ClockStandsDaoJDBC implements ClockStandsDao {
     }
 
     @Override
-    public boolean postClockStand(com.codecool.backend.dao.model.ClockStands clockStands) throws SQLException {
+    public boolean postClockStand(ClockStands clockStands) throws SQLException {
+        log.info("Attempting to save new clockstand: {}", clockStands);
         if (getClockStandByMonthAndYear(LocalDate.now().getYear(), LocalDate.now().getMonth()).isEmpty()) {
             String query = """
                     INSERT INTO clockstands VALUES (DEFAULT, DEFAULT, ?, ?, ?, ?, ?);
@@ -107,6 +112,7 @@ public class ClockStandsDaoJDBC implements ClockStandsDao {
                 throw new SQLException(e);
             }
         }
+        log.error("Clockstand saving failed, probably due to already having an entry for the current month!");
         return false;
     }
 

@@ -12,7 +12,7 @@ import java.sql.SQLException;
 public class DaoConfig {
     @Bean
     public Database database() {
-        return Database.of(System.getenv("databaseURL"), System.getenv("databaseUsername"), System.getenv("databasePassword"));
+        return Database.withSettings(System.getenv("databaseURL"), System.getenv("databaseUsername"), System.getenv("databasePassword"));
     }
     @Bean
     public ClockStandsDao clockStandsDao() throws SQLException {

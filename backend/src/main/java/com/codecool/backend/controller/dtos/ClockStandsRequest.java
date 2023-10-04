@@ -33,4 +33,14 @@ public class ClockStandsRequest {
     public ClockStands createClockStands() {
         return ClockStands.of(LocalDateTime.now(), warmWaterStand, coldWaterStand, electricityStand, warmingBill);
     }
+
+    @Override
+    public String toString() {
+        return "ClockStandsRequest{" +
+                "warmWaterStand=" + warmWaterStand +
+                ", coldWaterStand=" + coldWaterStand +
+                ", electricityStand=" + electricityStand +
+                ", warmingBill=" + warmingBill +
+                '}';
+    }
 }

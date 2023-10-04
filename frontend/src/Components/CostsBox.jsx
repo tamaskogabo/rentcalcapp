@@ -59,11 +59,11 @@ export default function CostsBox({ thisMonthData, lastMonthData }) {
         <>
             <Typography variant='h5' p={2}>
                 <AccountBalanceIcon sx={{ marginRight: '10px' }} />
-                Sum to wire to landlord: {sumToWire}
+                Sum to wire to landlord: {sumToWire} Ft
             </Typography>
             <Typography variant='h5' p={2}>
                 <CallSplitIcon sx={{ marginRight: '10px' }} />
-                Sum to ask from flatmate: {sharedCostsWithInternet / 2}
+                Sum to ask from flatmate: {sharedCostsWithInternet / 2} Ft
             </Typography>
         </>
     );
