@@ -32,15 +32,17 @@ function App() {
         async function fetchClockStands() {
             setLastMonthData(null);
             setThisMonthData(null);
-            const currentYear = new Date().getFullYear();
-            const lastMonth = MONTHS[new Date().getMonth() - 1];
+            const currentDate = new Date().getFullYear();
+            const lastMonthDate = new Date();
+            lastMonthDate.setMonth(lastMonthDate.getMonth() - 1);
+            const lastMonth = MONTHS[lastMonthDate.getMonth()];
             const thisMonth = MONTHS[new Date().getMonth()];
             const responseLastMonth = await fetch(
-                `/clockstands/date?year=${currentYear}&month=${lastMonth}`,
+                `/clockstands/date?year=${lastMonthDate.getFullYear()}&month=${lastMonth}`,
             );
             const resultLastMonth = await responseLastMonth.json();
             const responseThisMonth = await fetch(
-                `/clockstands/date?year=${currentYear}&month=${thisMonth}`,
+                `/clockstands/date?year=${currentDate}&month=${thisMonth}`,
             );
             const resultThisMonth = await responseThisMonth.json();
             if (!ignore) {
